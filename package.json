@@ -14,7 +14,7 @@
     "node"
   ],
   "author": "Valdo Raya",
-  "license": "Apache v2",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/cravoley/mean-chat/issues"
   },
