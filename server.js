@@ -10,6 +10,18 @@ const config = require('./webpack.config.js');
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
+const http = require('http').Server(app);
+
+
+// handle sockets request
+var io = require('./server/io');
+console.log(io);
+io = io(http);
+console.log(io);
+io.on("connection",s=>{
+    // console.log("OI");
+    // console.log(io.getClients());
+});
 
 
 if (isDeveloping) {
@@ -40,7 +52,7 @@ if (isDeveloping) {
   });
 }
 
-app.listen(port, '0.0.0.0', function onStart(err) {
+http.listen(port, '0.0.0.0', function onStart(err) {
   if (err) {
     console.log(err);
   }
