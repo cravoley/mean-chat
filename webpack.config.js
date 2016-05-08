@@ -3,6 +3,10 @@
 var path = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var nodeExternals = require('webpack-node-externals');
+
+var fs = require('fs');
+
 
 module.exports = {
   devtool: 'eval-source-map',
@@ -28,6 +32,7 @@ module.exports = {
       'process.env.NODE_ENV': JSON.stringify('development')
     })
   ],
+  // externals: [nodeExternals()],
   module: {
     loaders: [{
       test: /\.js?$/,
