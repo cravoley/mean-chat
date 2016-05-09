@@ -1,3 +1,4 @@
+"use strict";
 /* eslint no-console: 0 */
 
 const path = require('path');
@@ -5,22 +6,32 @@ const express = require('express');
 const webpack = require('webpack');
 const webpackMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-const config = require('./webpack.config.js');
+const config = require('../../webpack.config.js');
 
 const isDeveloping = process.env.NODE_ENV !== 'production';
 const port = isDeveloping ? 3000 : process.env.PORT;
 const app = express();
 const http = require('http').Server(app);
-
+const db = require("./db")();
 
 // handle sockets request
-var io = require('./server/io');
-console.log(io);
+var io = require('./io');
 io = io(http);
-console.log(io);
 io.on("connection",s=>{
-    // console.log("OI");
-    // console.log(io.getClients());
+    db.retrieveMessages(s);
+    s.on('message',function(data){
+        // console.log(data);
+        // get only sender, receiver and message objects from data
+        var {sender, receiver, message} = data; //NOT YET IMPLEMENTED IN NODE
+        db.insertMessage(sender, receiver, message, function(err, result){
+            // console.log("Oi",result);
+            // TODO: implement a retry mechanism
+            if(err) return s.emit("message", {"error":true, message:"Something went wrong. Please, to send your message again."});
+
+            // maybe this may be removed.
+            s.emit("message", {"error":false});
+        })
+    });
 });
 
 

@@ -8,12 +8,12 @@ function IO(http){
     socketIO = socketIO(http);
 
     this.on("connection",socket=>{
-        console.log(`Client ${socket.id} is now connected`);
-        let query = socket.handshake.query;
-        if(!query.name || query.city) {
-            socket.emit("error", "Please fulfill the required fields.");
-            return false;
-        }
+        // console.log(`Client ${socket.id} is now connected`);
+        // let query = socket.handshake.query;
+        // if(!query.name || query.city) {
+        //     socket.emit("error", "Please fulfill the required fields.");
+        //     return false;
+        // }
         clients.push(socket);
         socket.on("disconnect", () =>{
             clients = clients.filter(storedSocket=> {

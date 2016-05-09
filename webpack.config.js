@@ -12,7 +12,7 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: [
     'webpack-hot-middleware/client?reload=true',
-    path.join(__dirname, 'app/main.js')
+    path.join(__dirname, 'dist/app/main.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
@@ -21,7 +21,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'app/index.tpl.html',
+      template: 'src/app/index.tpl.html',
       inject: 'body',
       filename: 'index.html'
     }),
